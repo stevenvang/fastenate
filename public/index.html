@@ -6,6 +6,79 @@
   <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-  
+  <header >
+    <h1>
+      <img src="assets/logo.svg">
+    </h1>
+    <ul class="header-banner">
+      <li><a href=# onclick=renderContent(jsURL);>Random <span class="divider">&bull;</span></a></li>
+      <li><a href=# onclick=renderContent(edmURL);>My Boards <span class="divider">&bull;</span></a></li>
+      <li><a href=# onclick=renderContent(h3h3URL);>Get the Apps</a></li>
+    </ul>
+  </header>
+  <main>
+    <div id="container"></div>
+  </main>
+  <footer>
+    <img src="assets/facebok_grey.svg" />
+    <img src="assets/instagram_grey.svg" />
+  </footer>
+
+  <script>
+  const jsURL = "https://www.reddit.com/r/javascript.json";
+  const edmURL = "https://www.reddit.com/r/EDM.json";
+  const h3h3URL = "https://www.reddit.com/r/h3h3productions.json";
+  let div = document.createElement('div');
+  div.className = 'Steven';
+  let container = document.getElementById('container');
+  container.appendChild(div);
+
+  function createNode (element) {
+    return document.createElement(element);
+  }
+
+  function append (parent, el) {
+    return parent.appendChild(el);
+  }
+
+  function renderContent(url) {
+    fetch(url)
+      .then( (resp) => resp.json()
+      .then((response) => {
+        let children = response.data.children;
+        return children.map( (children) => {
+          const parent = document.getElementById('container');
+          let author = createNode('div');
+          let title = createNode('h3');
+          author.innerHTML = children.data.author;
+          title.innerHTML = children.data.title;
+          append(parent, title);
+          append(parent, author);
+        })
+      }));
+/* 
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == XMLHttpRequest.DONE) {
+          let asdf = JSON.parse(this.response).data.children;
+          for(let i=0; i<asdf.length; i++) {
+            let card = document.createElement('div');
+            card.className = 'card';
+            let title = document.createElement('div');
+            title.innerHTML = asdf[i].data.title;
+            let author = document.createElement('div');
+            author.innerHTML = asdf[i].data.author;
+            card.appendChild(title);
+            card.appendChild(author);
+            div.appendChild(card);
+          }
+        }
+      }
+      xhttp.open("GET", url);
+      xhttp.send(null); */
+    }
+
+  //flexbox froggy
+  </script>
 </body>
 </html>
